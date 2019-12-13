@@ -21,11 +21,10 @@ var player = {
     vy: 0
 
 }
-
+var enemycnt = 1;
 var airrest = 0.8;
-
+var enemy = [];
 var bullets = [];
-
 
 canvas.width = width;
 canvas.height = height;
@@ -84,10 +83,44 @@ function update(){
         player.x += player.vx;
         player.y += player.vy;
 
-        player.vy *= 0.8;
-        player.vx *= 0.8;
+        player.vy *= airrest;
+        player.vx *= airrest;
 
-//        if( keys[32] ){ makes bullets look cool but lag
+        for( var i = 0; i < enemycnt; i++ ){
+            enemy.unshift({
+                x: (1 + i ) * width/2,
+                y: (1 + i ) * height/5,
+                width: 20,
+                height: 20,
+                vx: 2
+            })
+            enemycnt--;
+        }
+
+        ctx.beginPath();
+        ctx.fillStyle = "#FF0000";
+
+        for( var i = 0; i < enemy.length; i++ ){
+
+            ctx.rect( enemy[i].x, enemy[i].y, enemy[i].width, enemy[i].height );
+
+            if( enemy[i].x == 0 || enemy[i].x + enemy[i].width == width ){
+                enemy[i].vx *= -1;
+            }
+
+            enemy[i].x += enemy[i].vx;
+
+            for( var o = 0; o < bullets.length; o++ ){
+                if( tag( bullets[o], enemy[i] ) ){
+                    enemy.splice( i );
+                    break;
+                }
+            }
+        }
+
+        ctx.fill();
+
+//        if( keys[32] ){ //makes bullets look cool but lag ruby blue
         if( keys[32] && able ){
 
             console.log("e");
