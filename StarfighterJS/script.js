@@ -42,8 +42,7 @@ function update(){
 
     function title(){
 
-        //TODO DCBCBB
-        //lipid plasmamembrane
+        //TODO
 
     }
 
@@ -55,19 +54,31 @@ function update(){
         ctx.rect( player.x, player.y, player.width, player.height );
         ctx.fill();
         if( keys[65] || keys[37] ){
-            player.vx--;
+            if( player.x >= 0 ){
+                player.vx--;
+            }
+            else player.vx = 0;
         }
 
         if( keys[68] || keys[39]){
-            player.vx++;
+            if( player.x + player.width <= width ){
+                player.vx++;
+            }
+            else player.vx = 0;
         }
 
         if( keys[87] || keys[38] ){
-            player.vy--;
+            if( player.y >= 0 ){
+                player.vy--;
+            }
+            else player.vy = 0;
         }
 
         if( keys[83] || keys[40] ){
-            player.vy++;
+            if( player.y + player.height <= height ){
+                player.vy++;
+            }
+            else player.vy = 0;
         }
 
         player.x += player.vx;
@@ -86,7 +97,7 @@ function update(){
                 width : 2,
                 height : 20,
                 vx: player.vx,
-                vy: 1.5
+                vy: 5
             });
             able = false;
             window.setTimeout( function(){
@@ -136,3 +147,19 @@ window.addEventListener("keyup", function(e){
 window.addEventListener("load", function(){
     update();
 });
+
+function tag( one, two){
+
+    var vx = (one.x + (one.width/2) ) - (two.x + (two.width/2) );
+    var vy = one.y + (one.height/2) - two.y - two.width/2;
+
+    var hwidths = one.width/2 + two.width/2;
+    var hheights = one.height/2 + two.height/2;
+
+    if( Math.abs(vx) < hwidths && Math.abs(vy) < hheights ){
+        return true;
+    }
+
+    return false;
+
+}
