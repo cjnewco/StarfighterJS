@@ -85,6 +85,7 @@ function update(){
 
         player.vy *= airrest;
         player.vx *= airrest;
+<<<<<<< HEAD
 
         var temp = enemycnt;
         for( var i = 0; i < enemycnt; i++ ){
@@ -95,26 +96,45 @@ function update(){
                 height: 20,
                 vx: 2
             });
+=======
+        var temp = enemycnt;
+        for( var i = 0; i < enemycnt; i++ ){
+            enemy.unshift({
+                x: (1 + i ) * width/(temp + 1 ),
+                y: height/5,
+                width: 20,
+                height: 20,
+                vx: -2
+            })
+>>>>>>> origin/master
             enemycnt--;
         }
 
         ctx.beginPath();
         ctx.fillStyle = "#FF0000";
+        if( enemy.length > 0 ){
+            if( enemy[0].x == 0 || enemy[enemy.length-1].x == width ){
+                for( var i = 0; i < enemy.length; i++ ){
+                    enemy[i].vx *= -1;
+                }
+            }
+        }
 
         for( var i = 0; i < enemy.length; i++ ){
 
             ctx.rect( enemy[i].x, enemy[i].y, enemy[i].width, enemy[i].height );
 
-            if( enemy[i].x == 0 || enemy[i].x + enemy[i].width == width ){
-                enemy[i].vx *= -1;
-            }
-
             enemy[i].x += enemy[i].vx;
 
             for( var o = 0; o < bullets.length; o++ ){
                 if( tag( bullets[o], enemy[i] ) ){
+<<<<<<< HEAD
                     enemy.splice( i );
                     bullets.splice( o );
+=======
+                    enemy.splice( i,1 );
+                    bullets.splice( o,1 );
+>>>>>>> origin/master
                     break;
                 }
             }
@@ -124,13 +144,19 @@ function update(){
 
 //        if( keys[32] ){ //makes bullets look cool but lag ruby blue
         if( keys[32] && able ){
-
-            console.log("e");
             bullets.unshift({
-                x: player.x + player.width/2,
+                x: player.x,
                 y: player.y - player.height,
                 width : 2,
-                height : 20,
+                height : 10,
+                vx: player.vx,
+                vy: 5
+            });
+            bullets.unshift({
+                x: player.x + player.width,
+                y: player.y - player.height,
+                width : 2,
+                height : 10,
                 vx: player.vx,
                 vy: 5
             });
@@ -139,7 +165,11 @@ function update(){
 
                 able = true;
 
+<<<<<<< HEAD
             } , 1000 )
+=======
+            } , 50 )
+>>>>>>> origin/master
         }
 
         ctx.fillStyle = "#FFFFFF";
@@ -147,7 +177,6 @@ function update(){
         ctx.beginPath();
 
         for( var i = 0; i < bullets.length; i++ ){
-            console.log( bullets[i] + " yikes");
             ctx.rect( bullets[i].x, bullets[i].y, bullets[i].width, bullets[i].height );
             bullets[i].y -= bullets[i].vy;
 
