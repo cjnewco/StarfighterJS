@@ -85,34 +85,38 @@ function update(){
 
         player.vy *= airrest;
         player.vx *= airrest;
-
+        var temp = enemycnt;
         for( var i = 0; i < enemycnt; i++ ){
             enemy.unshift({
-                x: (1 + i ) * width/2,
-                y: (1 + i ) * height/5,
+                x: (1 + i ) * width/(temp + 1 ),
+                y: height/5,
                 width: 20,
                 height: 20,
-                vx: 2
+                vx: -2
             })
             enemycnt--;
         }
 
         ctx.beginPath();
         ctx.fillStyle = "#FF0000";
+        if( enemy.length > 0 ){
+            if( enemy[0].x == 0 || enemy[enemy.length-1].x == width ){
+                for( var i = 0; i < enemy.length; i++ ){
+                    enemy[i].vx *= -1;
+                }
+            }
+        }
 
         for( var i = 0; i < enemy.length; i++ ){
 
             ctx.rect( enemy[i].x, enemy[i].y, enemy[i].width, enemy[i].height );
 
-            if( enemy[i].x == 0 || enemy[i].x + enemy[i].width == width ){
-                enemy[i].vx *= -1;
-            }
-
             enemy[i].x += enemy[i].vx;
 
             for( var o = 0; o < bullets.length; o++ ){
                 if( tag( bullets[o], enemy[i] ) ){
-                    enemy.splice( i );
+                    enemy.splice( i,1 );
+                    bullets.splice( o,1 );
                     break;
                 }
             }
@@ -122,13 +126,19 @@ function update(){
 
 //        if( keys[32] ){ //makes bullets look cool but lag ruby blue
         if( keys[32] && able ){
-
-            console.log("e");
             bullets.unshift({
-                x: player.x + player.width/2,
+                x: player.x,
                 y: player.y - player.height,
                 width : 2,
-                height : 20,
+                height : 10,
+                vx: player.vx,
+                vy: 5
+            });
+            bullets.unshift({
+                x: player.x + player.width,
+                y: player.y - player.height,
+                width : 2,
+                height : 10,
                 vx: player.vx,
                 vy: 5
             });
@@ -137,7 +147,7 @@ function update(){
 
                 able = true;
 
-            } , 500 )
+            } , 50 )
         }
 
         ctx.fillStyle = "#FFFFFF";
@@ -145,7 +155,6 @@ function update(){
         ctx.beginPath();
 
         for( var i = 0; i < bullets.length; i++ ){
-            console.log( bullets[i] + " yikes");
             ctx.rect( bullets[i].x, bullets[i].y, bullets[i].width, bullets[i].height );
             bullets[i].y -= bullets[i].vy;
 
