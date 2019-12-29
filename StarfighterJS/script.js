@@ -85,18 +85,7 @@ function update(){
 
         player.vy *= airrest;
         player.vx *= airrest;
-<<<<<<< HEAD
 
-        var temp = enemycnt;
-        for( var i = 0; i < enemycnt; i++ ){
-            enemy.unshift({
-                x: ( i + 1 ) * width/temp,
-                y: height/5,
-                width: 20,
-                height: 20,
-                vx: 2
-            });
-=======
         var temp = enemycnt;
         for( var i = 0; i < enemycnt; i++ ){
             enemy.unshift({
@@ -106,7 +95,7 @@ function update(){
                 height: 20,
                 vx: -2
             })
->>>>>>> origin/master
+
             enemycnt--;
         }
 
@@ -128,13 +117,10 @@ function update(){
 
             for( var o = 0; o < bullets.length; o++ ){
                 if( tag( bullets[o], enemy[i] ) ){
-<<<<<<< HEAD
-                    enemy.splice( i );
-                    bullets.splice( o );
-=======
+
                     enemy.splice( i,1 );
                     bullets.splice( o,1 );
->>>>>>> origin/master
+
                     break;
                 }
             }
@@ -165,11 +151,8 @@ function update(){
 
                 able = true;
 
-<<<<<<< HEAD
-            } , 1000 )
-=======
-            } , 50 )
->>>>>>> origin/master
+            } , 50 );
+
         }
 
         ctx.fillStyle = "#FFFFFF";
