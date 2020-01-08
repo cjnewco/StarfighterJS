@@ -101,13 +101,16 @@ function update(){
 
         ctx.beginPath();
         ctx.fillStyle = "#FF0000";
+        console.log( enemy.length );
         if( enemy.length > 0 ){
-            if( enemy[0].x == 0 || enemy[enemy.length-1].x == width ){
+            console.log("checking the memes");
+            if( enemy[0].x == 0 ){
                 for( var i = 0; i < enemy.length; i++ ){
                     enemy[i].vx *= -1;
                 }
-            }
+            }//this is fucked because it unshifts but class ends in like small amount of time so i probably wont fix it lol
         }
+        console.log( enemy.length-1 );
 
         for( var i = 0; i < enemy.length; i++ ){
 
