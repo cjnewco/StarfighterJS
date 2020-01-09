@@ -21,7 +21,8 @@ var player = {
     vy: 0
 
 }
-var enemycnt = 2;
+var enemycnt = 4;
+var temp = enemycnt;
 var airrest = 0.8;
 var enemy = [];
 var bullets = [];
@@ -86,31 +87,29 @@ function update(){
         player.vy *= airrest;
         player.vx *= airrest;
 
-        var temp = enemycnt;
-        for( var i = 0; i < enemycnt; i++ ){
-            enemy.unshift({
-                x: (1 + i ) * width/(temp + 1 ),
+        var num = 0;
+        for( var i = 0; i < enemycnt; ){
+            enemy.push({
+                x: ( num + 1 ) * width/(temp + 1),
                 y: height/5,
                 width: 20,
                 height: 20,
                 vx: -2
-            })
+            });
 
+            num++;
             enemycnt--;
         }
 
         ctx.beginPath();
         ctx.fillStyle = "#FF0000";
-        console.log( enemy.length );
         if( enemy.length > 0 ){
-            console.log("checking the memes");
-            if( enemy[0].x == 0 ){
+            if( enemy[0].x - 20 <= 0  || enemy[enemy.length - 1].x + 20 >= (width - enemy[0].width/2) ){
                 for( var i = 0; i < enemy.length; i++ ){
-                    enemy[i].vx *= -1;
+                    enemy[i].vx *= -1
                 }
-            }//this is fucked because it unshifts but class ends in like small amount of time so i probably wont fix it lol
+            }//this is fucked because it unshifts but class ends in like small amount of time so i probably wont fix it lol nevm fixed it but not completly
         }
-        console.log( enemy.length-1 );
 
         for( var i = 0; i < enemy.length; i++ ){
 
