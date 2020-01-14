@@ -15,8 +15,8 @@ var player = {
 
     x: width/2,
     y: height/2,
-    width: 20,
-    height: 20,
+    width: 48,
+    height: 48,
     vx: 0,
     vy: 0
 
@@ -26,6 +26,9 @@ var temp = enemycnt;
 var airrest = 0.8;
 var enemy = [];
 var bullets = [];
+
+var ship = new Image();
+ship.src = "sprites/shipl.gif";
 
 canvas.width = width;
 canvas.height = height;
@@ -48,11 +51,10 @@ function update(){
 
     function game(){
 
-        ctx.beginPath();
 
-        ctx.fillStyle = "#808080";
-        ctx.rect( player.x, player.y, player.width, player.height );
-        ctx.fill();
+
+        ctx.fillStyle ="#808080";
+        ctx.drawImage( ship, player.x, player.y, player.width, player.height );
         if( keys[65] || keys[37] ){
             if( player.x >= 0 ){
                 player.vx--;
@@ -140,21 +142,14 @@ function update(){
 //        if( keys[32] ){ //makes bullets look cool but lag ruby blue
         if( keys[32] && able ){
             bullets.unshift({
-                x: player.x,
-                y: player.y - player.height,
+                x: player.x + player.width/2,
+                y: player.y - player.height / 2,
                 width : 2,
                 height : 10,
                 vx: player.vx,
                 vy: 5
             });
-            bullets.unshift({
-                x: player.x + player.width,
-                y: player.y - player.height,
-                width : 2,
-                height : 10,
-                vx: player.vx,
-                vy: 5
-            });
+
             able = false;
             window.setTimeout( function(){
 
