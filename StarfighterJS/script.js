@@ -21,7 +21,7 @@ var player = {
     vy: 0
 
 }
-var enemycnt = 4;
+var enemycnt = 5;
 var temp = enemycnt;
 var airrest = 0.8;
 var enemy = [];
@@ -122,6 +122,13 @@ function update(){
 
                     enemy.splice( i,1 );
                     bullets.splice( o,1 );
+
+                    for( var i = 0; i < enemy.length; i++ ){
+                        if( enemy[0].vx > 0 ){
+                            enemy[i].vx++;
+                        }
+                        else enemy[i].vx--;
+                    }
 
                     break;
                 }
