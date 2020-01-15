@@ -29,6 +29,8 @@ var bullets = [];
 
 var ship = new Image();
 ship.src = "sprites/shipl.gif";
+var frog = new Image();
+frog.src = 'sprites/frog.gif';
 
 canvas.width = width;
 canvas.height = height;
@@ -37,7 +39,7 @@ function update(){
 
     ctx.clearRect( 0, 0, width, height );
 
-    ctx.fillStyle = "#0080FF";
+    ctx.fillStyle = "#000000";
 
     ctx.beginPath();
     ctx.rect( 0, 0, width, height);
@@ -94,8 +96,8 @@ function update(){
             enemy.push({
                 x: ( num + 1 ) * width/(temp + 1),
                 y: height/5,
-                width: 20,
-                height: 20,
+                width: 48,
+                height: 48,
                 vx: -2
             });
 
@@ -115,7 +117,7 @@ function update(){
 
         for( var i = 0; i < enemy.length; i++ ){
 
-            ctx.rect( enemy[i].x, enemy[i].y, enemy[i].width, enemy[i].height );
+            ctx.drawImage( frog, enemy[i].x, enemy[i].y, enemy[i].width, enemy[i].height );
 
             enemy[i].x += enemy[i].vx;
 
