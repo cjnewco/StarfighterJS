@@ -53,8 +53,6 @@ function update(){
 
     function game(){
 
-
-
         ctx.fillStyle ="#808080";
         ctx.drawImage( ship, player.x, player.y, player.width, player.height );
         if( keys[65] || keys[37] ){
@@ -98,11 +96,16 @@ function update(){
                 y: height/5,
                 width: 48,
                 height: 48,
-                vx: -2
+                vx: -2,
+                vy: 0.5
             });
 
             num++;
             enemycnt--;
+        }
+
+        if( enemy.length == 0 ){
+            win();
         }
 
         ctx.beginPath();
@@ -120,6 +123,7 @@ function update(){
             ctx.drawImage( frog, enemy[i].x, enemy[i].y, enemy[i].width, enemy[i].height );
 
             enemy[i].x += enemy[i].vx;
+            enemy[i].y += enemy[i].vy;
 
             for( var o = 0; o < bullets.length; o++ ){
                 if( tag( bullets[o], enemy[i] ) ){
@@ -157,7 +161,7 @@ function update(){
 
                 able = true;
 
-            } , 50 );
+            } , 250 );
 
         }
 
@@ -181,6 +185,7 @@ function update(){
     function win(){
 
         //TODO
+        console.log( "win" );
 
     }
 
