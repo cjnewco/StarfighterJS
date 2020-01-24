@@ -35,6 +35,9 @@ frog.src = 'sprites/frog.gif';
 canvas.width = width;
 canvas.height = height;
 
+var gamer = true;
+var won = false;
+
 function update(){
 
     ctx.clearRect( 0, 0, width, height );
@@ -44,6 +47,7 @@ function update(){
     ctx.beginPath();
     ctx.rect( 0, 0, width, height);
     ctx.fill();
+
 
     function title(){
 
@@ -105,7 +109,7 @@ function update(){
         }
 
         if( enemy.length == 0 ){
-            win();
+            won = true;
         }
 
         ctx.beginPath();
@@ -185,11 +189,19 @@ function update(){
     function win(){
 
         //TODO
+        gamer = false;
         console.log( "win" );
+        ctx.clearRect(0,0,width,height);
+        ctx.fillText( "win" , width/2, height/2 );
 
     }
+    if( gamer ){
+        game();
+    }
+    if( won ){
+        win();
+    }
 
-    game();
 
     requestAnimationFrame(update);
 }
