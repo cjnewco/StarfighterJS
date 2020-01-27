@@ -31,6 +31,8 @@ var ship = new Image();
 ship.src = "sprites/shipl.gif";
 var frog = new Image();
 frog.src = 'sprites/frog.gif';
+var pew = new Image();
+pew.src = 'pew pew.gif';
 
 canvas.width = width;
 canvas.height = height;
@@ -174,7 +176,7 @@ function update(){
         ctx.beginPath();
 
         for( var i = 0; i < bullets.length; i++ ){
-            ctx.rect( bullets[i].x, bullets[i].y, bullets[i].width, bullets[i].height );
+            ctx.drawImage( pew, bullets[i].x, bullets[i].y, bullets[i].width, bullets[i].height );
             bullets[i].y -= bullets[i].vy;
 
             if( bullets[i].x > width || bullets[i].y > height ){
