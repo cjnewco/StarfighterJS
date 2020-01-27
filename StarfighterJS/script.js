@@ -32,13 +32,15 @@ ship.src = "sprites/shipl.gif";
 var frog = new Image();
 frog.src = 'sprites/frog.gif';
 var pew = new Image();
-pew.src = 'pew pew.gif';
+pew.src = 'sprites/pew pew.gif';
 
 canvas.width = width;
 canvas.height = height;
 
-var gamer = true;
+var op = true;
+var gamer = false;
 var won = false;
+var landfall = false;
 
 function update(){
 
@@ -53,6 +55,8 @@ function update(){
 
     function title(){
 
+        op  = false;
+        gamer = true;
         //TODO
 
     }
@@ -125,6 +129,13 @@ function update(){
         }
 
         for( var i = 0; i < enemy.length; i++ ){
+            if( enemy[i].y == height - enemy[i].height ){
+                landfall = true;
+                console.log( 'ouch' );
+            }
+        }
+
+        for( var i = 0; i < enemy.length; i++ ){
 
             ctx.drawImage( frog, enemy[i].x, enemy[i].y, enemy[i].width, enemy[i].height );
 
@@ -156,8 +167,8 @@ function update(){
             bullets.unshift({
                 x: player.x + player.width/2,
                 y: player.y - player.height / 2,
-                width : 2,
-                height : 10,
+                width : 32,
+                height : 32,
                 vx: player.vx,
                 vy: 5
             });
@@ -176,7 +187,7 @@ function update(){
         ctx.beginPath();
 
         for( var i = 0; i < bullets.length; i++ ){
-            ctx.drawImage( pew, bullets[i].x, bullets[i].y, bullets[i].width, bullets[i].height );
+            ctx.drawImage( pew, bullets[i].x - bullets[i].width/2, bullets[i].y, bullets[i].width, bullets[i].height );
             bullets[i].y -= bullets[i].vy;
 
             if( bullets[i].x > width || bullets[i].y > height ){
@@ -197,11 +208,24 @@ function update(){
         ctx.fillText( "win" , width/2, height/2 );
 
     }
+
+    function lose(){
+        gamer = false;
+        ctx.clearRect(0,0,width, height);
+        ctx.fillText("lose", width/2, height/2 );
+    }
+
+    if( op ){
+        title();
+    }
     if( gamer ){
         game();
     }
     if( won ){
         win();
+    }
+    if( landfall ){
+        lose();
     }
 
 
