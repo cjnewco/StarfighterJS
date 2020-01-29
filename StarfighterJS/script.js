@@ -21,6 +21,9 @@ var player = {
     vy: 0
 
 }
+
+var cursorx = 0;
+var cursory = 0;
 var enemycnt = 5;
 var temp = enemycnt;
 var airrest = 0.8;
@@ -56,8 +59,22 @@ function update(){
     function title(){
 
         op  = false;
-        gamer = true;
         //TODO
+        ctx.fillStyle = "#45F9CC3";
+
+        ctx.beginPath();
+
+        var button = {
+            x : 3 * height / 4,
+            y : width / 2 + 50,
+            width : 100,
+            height : 30
+        }
+        ctx.rect( button.x, button.y, button.width, button.height );
+
+
+
+        ctx.fill();
 
     }
 
@@ -178,7 +195,7 @@ function update(){
 
                 able = true;
 
-            } , 250 );
+            } , 1000 );
 
         }
 
@@ -231,6 +248,10 @@ function update(){
 
     requestAnimationFrame(update);
 }
+window.addEventListener( "mousemove", function(e){
+    cursorx = e.x;
+    cursory = e.y;
+})
 
 window.addEventListener("keydown", function(e){
     keys[e.keyCode] = true;
