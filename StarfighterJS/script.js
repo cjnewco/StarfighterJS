@@ -22,8 +22,13 @@ var player = {
 
 }
 
-var cursorx = 0;
-var cursory = 0;
+var cursor = {
+    x : 0,
+    y : 0,
+    width : 11,
+    height : 16,
+    click : false
+};
 var enemycnt = 5;
 var temp = enemycnt;
 var airrest = 0.8;
@@ -36,6 +41,8 @@ var frog = new Image();
 frog.src = 'sprites/frog.gif';
 var pew = new Image();
 pew.src = 'sprites/pew pew.gif';
+var arrow = new Image();
+arrow.src = "sprites/Cursor.gif";
 
 canvas.width = width;
 canvas.height = height;
@@ -55,27 +62,27 @@ function update(){
     ctx.rect( 0, 0, width, height);
     ctx.fill();
 
-
     function title(){
-
-        op  = false;
         //TODO
-        ctx.fillStyle = "#45F9CC3";
-
-        ctx.beginPath();
-
-        var button = {
-            x : 3 * height / 4,
-            y : width / 2 + 50,
-            width : 100,
-            height : 30
+        var box = {
+            x : width/2 - 200,
+            y : height /5 * 3,
+            width : 400,
+            height : 90
         }
-        ctx.rect( button.x, button.y, button.width, button.height );
 
-
-
-        ctx.fill();
-
+        ctx.fillStyle = "#45F9C3";
+        ctx.fillRect( box.x, box.y, box.width, box.height );
+        ctx.fillStyle = '#FFFFFF';
+        ctx.font = '20px Comic Sans MS';
+        ctx.fillText( 'START', box.x + box.width/2 - 20, box.y + box.height/2 + 10 );
+        ctx.drawImage( arrow, cursor.x, cursor.y, cursor.width, cursor.height );
+        if( cursor.click ){
+            if( tag( box, cursor ) ){
+                gamer = true;
+                op = false;//change cols
+            }
+        }
     }
 
     function game(){
@@ -248,9 +255,16 @@ function update(){
 
     requestAnimationFrame(update);
 }
+
+window.addEventListener( "click", function(e){
+    cursor.click = true;
+    window.setTimeout( function(){
+        cursor.click = false;
+    }, 10 );
+})
 window.addEventListener( "mousemove", function(e){
-    cursorx = e.x;
-    cursory = e.y;
+    cursor.x = e.x;
+    cursor.y = e.y;
 })
 
 window.addEventListener("keydown", function(e){
