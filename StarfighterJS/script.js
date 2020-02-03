@@ -65,9 +65,9 @@ function update(){
     function title(){
         //TODO
         var box = {
-            x : width/2 - 200,
+            x : width/2 - 150,
             y : height /5 * 3,
-            width : 400,
+            width : 300,
             height : 90
         }
 
@@ -75,7 +75,7 @@ function update(){
         ctx.fillRect( box.x, box.y, box.width, box.height );
         ctx.fillStyle = '#FFFFFF';
         ctx.font = '20px Comic Sans MS';
-        ctx.fillText( 'START', box.x + box.width/2 - 20, box.y + box.height/2 + 10 );
+        ctx.fillText( 'START', box.x + box.width/2 - 25, box.y + box.height/2 + 10 );
         ctx.drawImage( arrow, cursor.x, cursor.y, cursor.width, cursor.height );
         if( cursor.click ){
             if( tag( box, cursor ) ){
