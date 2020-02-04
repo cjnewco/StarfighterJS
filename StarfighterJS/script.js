@@ -41,8 +41,6 @@ var frog = new Image();
 frog.src = 'sprites/frog.gif';
 var pew = new Image();
 pew.src = 'sprites/pew pew.gif';
-var arrow = new Image();
-arrow.src = "sprites/Cursor.gif";
 
 canvas.width = width;
 canvas.height = height;
@@ -76,7 +74,6 @@ function update(){
         ctx.fillStyle = '#FFFFFF';
         ctx.font = '20px Comic Sans MS';
         ctx.fillText( 'START', box.x + box.width/2 - 25, box.y + box.height/2 + 10 );
-        ctx.drawImage( arrow, cursor.x, cursor.y, cursor.width, cursor.height );
         if( cursor.click ){
             if( tag( box, cursor ) ){
                 gamer = true;
