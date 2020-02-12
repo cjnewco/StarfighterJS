@@ -18,7 +18,9 @@ var player = {
     width: 48,
     height: 48,
     vx: 0,
-    vy: 0
+    vy: 0,
+    super: false,
+    kills: 0
 
 }
 
@@ -29,18 +31,22 @@ var cursor = {
     height : 16,
     click : false
 };
+var frame = 0;
 var enemycnt = 5;
 var temp = enemycnt;
 var airrest = 0.8;
 var enemy = [];
 var bullets = [];
+var powers = [];
 
 var ship = new Image();
-ship.src = "sprites/shipl.gif";
+ship.src = "src/sprites/shipl.gif";
 var frog = new Image();
-frog.src = 'sprites/frog.gif';
+frog.src = 'src/sprites/frog.gif';
 var pew = new Image();
-pew.src = 'sprites/pew pew.gif';
+pew.src = 'src/sprites/pew pew.gif';
+var trophy = new Image();
+trophy.src = 'src/sprites/ngwin.gif';
 
 canvas.width = width;
 canvas.height = height;
@@ -83,6 +89,7 @@ function update(){
     }
 
     function game(){
+        frame++;
 
         ctx.fillStyle ="#808080";
         ctx.drawImage( ship, player.x, player.y, player.width, player.height );
@@ -128,15 +135,20 @@ function update(){
                 width: 48,
                 height: 48,
                 vx: -2,
-                vy: 0.5
+                vy: 2
             });
 
             num++;
             enemycnt--;
         }
+        console.log( frame );
+        if( frame == 400 ){
+            enemycnt += 5;
+        }
+
 
         if( enemy.length == 0 ){
-            won = true;
+//            won = true;
         }
 
         ctx.beginPath();
@@ -144,7 +156,7 @@ function update(){
         if( enemy.length > 0 ){
             if( enemy[0].x - 20 <= 0  || enemy[enemy.length - 1].x + 20 >= (width - enemy[0].width/2) ){
                 for( var i = 0; i < enemy.length; i++ ){
-                    enemy[i].vx *= -1
+//                    enemy[i].vx *= -1
                 }
             }//this is fucked because it unshifts but class ends in like small amount of time so i probably wont fix it lol nevm fixed it but not completly
         }
@@ -160,7 +172,7 @@ function update(){
 
             ctx.drawImage( frog, enemy[i].x, enemy[i].y, enemy[i].width, enemy[i].height );
 
-            enemy[i].x += enemy[i].vx;
+//            enemy[i].x += enemy[i].vx;
             enemy[i].y += enemy[i].vy;
 
             for( var o = 0; o < bullets.length; o++ ){
@@ -168,6 +180,7 @@ function update(){
 
                     enemy.splice( i,1 );
                     bullets.splice( o,1 );
+                    player.kills++;
 
                     for( var i = 0; i < enemy.length; i++ ){
                         if( enemy[0].vx > 0 ){
@@ -193,6 +206,25 @@ function update(){
                 vx: player.vx,
                 vy: 5
             });
+            if( player.super ){
+                bullets.unshift({
+                x: player.x + player.width * 9 / 10,
+                y: player.y - player.height / 2 + 15,
+                width : 32,
+                height : 32,
+                vx: player.vx,
+                vy: 5
+            });
+
+                bullets.unshift({
+                x: player.x + player.width * 1 / 10,
+                y: player.y - player.height / 2 + 15,
+                width : 32,
+                height : 32,
+                vx: player.vx,
+                vy: 5
+            });
+            }
 
             able = false;
             window.setTimeout( function(){
@@ -226,6 +258,8 @@ function update(){
         gamer = false;
         console.log( "win" );
         ctx.clearRect(0,0,width,height);
+        ctx.fillRect(0,0,width, height);
+
         ctx.fillText( "win" , width/2, height/2 );
 
     }
