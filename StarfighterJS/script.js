@@ -38,7 +38,10 @@ var airrest = 0.8;
 var enemy = [];
 var bullets = [];
 var powers = [];
+var difficulty = 0;
 
+var triple = new Image();
+triple.src = 'src/sprites/tripleshot.gif';
 var ship = new Image();
 ship.src = "src/sprites/shipl.gif";
 var frog = new Image();
@@ -87,6 +90,7 @@ function update(){
             }
         }
     }
+    //poewrup falls, gives super for 5s
 
     function game(){
         frame++;
@@ -131,19 +135,31 @@ function update(){
         for( var i = 0; i < enemycnt; ){
             enemy.push({
                 x: ( num + 1 ) * width/(temp + 1),
-                y: height/5,
+                y: -48,
                 width: 48,
                 height: 48,
                 vx: -2,
-                vy: 2
+                vy: 2 + difficulty
             });
 
             num++;
             enemycnt--;
         }
         console.log( frame );
-        if( frame == 400 ){
+        if( frame % 200 == 0 ){
             enemycnt += 5;
+            difficulty += 0.1;
+        }
+
+        if( difficulty % 0.3 == 0 ){
+            if( powers.length == 0 ){
+                powers.push({
+                    x: width/2 + 5,
+                    y: 0,
+                    width: 10,
+                    height: 10
+                })
+            }
         }
 
 
@@ -165,6 +181,21 @@ function update(){
             if( enemy[i].y == height - enemy[i].height ){
                 landfall = true;
                 console.log( 'ouch' );
+            }
+        }
+
+
+        for( var i = 0; i < powers.length; i++ ){
+            ctx.drawImage( triple, powers[i].x, powers[i].y, powers[i].width, powers[i].height );
+
+            powers[i].y += 2;
+
+            if( tag( player, powers[i] ) ){
+                player.super = true;
+                setTimeout( function(){
+                    player.super = false;
+                }, 5000 );
+                powers.splice( i );
             }
         }
 
@@ -231,7 +262,7 @@ function update(){
 
                 able = true;
 
-            } , 1000 );
+            } , 200 );
 
         }
 
@@ -267,7 +298,40 @@ function update(){
     function lose(){
         gamer = false;
         ctx.clearRect(0,0,width, height);
-        ctx.fillText("lose", width/2, height/2 );
+        ctx.fillText("click to try again loser", width/2, height/2 );
+        if( cursor.click ){
+            landfall = false;
+            gamer = true;
+
+
+            able = true;
+            player = {
+                x: width/2,
+                y: height/2,
+                width: 48,
+                height: 48,
+                vx: 0,
+                vy: 0,
+                super: false,
+                kills: 0
+            }
+
+            cursor = {
+                x : 0,
+                y : 0,
+                width : 11,
+                height : 16,
+                click : false
+            };
+            frame = 0;
+            enemycnt = 5;
+            temp = enemycnt;
+            airrest = 0.8;
+            enemy = [];
+            bullets = [];
+            powers = [];
+            difficulty = 0;
+        }
     }
 
     if( op ){
