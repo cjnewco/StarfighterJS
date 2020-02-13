@@ -163,8 +163,8 @@ function update(){
         }
 
 
-        if( enemy.length == 0 ){
-//            won = true;
+        if( enemy.length == 0 && difficulty > 2.9 ){
+            won = true;
         }
 
         ctx.beginPath();
@@ -178,7 +178,7 @@ function update(){
         }
 
         for( var i = 0; i < enemy.length; i++ ){
-            if( enemy[i].y == height - enemy[i].height ){
+            if( enemy[i].y >= height ){
                 landfall = true;
                 console.log( 'ouch' );
             }
@@ -189,6 +189,10 @@ function update(){
             ctx.drawImage( triple, powers[i].x, powers[i].y, powers[i].width, powers[i].height );
 
             powers[i].y += 2;
+
+            if( powers[i].y > height ){
+                powers.splice( i );
+            }
 
             if( tag( player, powers[i] ) ){
                 player.super = true;
