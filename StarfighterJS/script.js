@@ -184,22 +184,23 @@ function update(){
             }
         }
 
+        if( powers.length > 0 ){
+            for( var i = 0; i < powers.length; i++ ){
+                ctx.drawImage( triple, powers[i].x, powers[i].y, powers[i].width, powers[i].height );
 
-        for( var i = 0; i < powers.length; i++ ){
-            ctx.drawImage( triple, powers[i].x, powers[i].y, powers[i].width, powers[i].height );
+                powers[i].y += 2;
 
-            powers[i].y += 2;
+                if( powers[i].y > height ){
+                    powers = [];
+                }
 
-            if( powers[i].y > height ){
-                powers.splice( i );
-            }
-
-            if( tag( player, powers[i] ) ){
-                player.super = true;
-                setTimeout( function(){
-                    player.super = false;
-                }, 5000 );
-                powers.splice( i );
+                    if( tag( player, powers[i] ) ){
+                        player.super = true;
+                        setTimeout( function(){
+                        player.super = false;
+                    }, 5000 );
+                    powers.splice( i );
+                }
             }
         }
 
