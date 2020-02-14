@@ -295,7 +295,7 @@ function update(){
         console.log( "win" );
         ctx.clearRect(0,0,width,height);
         ctx.fillRect(0,0,width, height);
-
+        ctx.fillStyle = '#FFFF33';
         ctx.fillText( "win" , width/2, height/2 );
 
     }
