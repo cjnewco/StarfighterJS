@@ -58,6 +58,7 @@ var op = true;
 var gamer = false;
 var won = false;
 var landfall = false;
+var cooldown = 0;
 
 function update(){
 
@@ -183,7 +184,9 @@ function update(){
                 console.log( 'ouch' );
             }
         }
-
+        if( powers.length == 0 ){
+            console.log("f word");
+        }
         if( powers.length > 0 ){
             for( var i = 0; i < powers.length; i++ ){
                 ctx.drawImage( triple, powers[i].x, powers[i].y, powers[i].width, powers[i].height );
@@ -199,7 +202,8 @@ function update(){
                         setTimeout( function(){
                         player.super = false;
                     }, 5000 );
-                    powers.splice( i );
+                    powers.pop();
+                    break;
                 }
             }
         }
@@ -233,7 +237,7 @@ function update(){
         ctx.fill();
 
 //        if( keys[32] ){ //makes bullets look cool but lag ruby blue
-        if( keys[32] && able ){
+        if( keys[32] && cooldown == 0 ){
             bullets.unshift({
                 x: player.x + player.width/2,
                 y: player.y - player.height / 2,
@@ -262,13 +266,15 @@ function update(){
             });
             }
 
-            able = false;
-            window.setTimeout( function(){
+            cooldown = 20;
 
-                able = true;
+        }
 
-            } , 200 );
+        ctx.fillStyle = '#00FFFF';
+        ctx.fillRect( player.x + 10, player.y - cooldown, 2, cooldown );
 
+        if( cooldown > 0 ){
+            cooldown--;
         }
 
         ctx.fillStyle = "#FFFFFF";
@@ -351,7 +357,6 @@ function update(){
     if( landfall ){
         lose();
     }
-
 
     requestAnimationFrame(update);
 }
