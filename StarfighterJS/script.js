@@ -193,16 +193,17 @@ function update(){
 
                 powers[i].y += 2;
 
-                if( powers[i].y > height ){
-
-                    if( tag( player, powers[i] ) ){
-                        player.super = true;
-                        setTimeout( function(){
+                if( tag( player, powers[i] ) ){
+                    player.super = true;
+                    setTimeout( function(){
                         player.super = false;
-                        }, 5000 );
-                        powers.pop();
-                        break;
-                    }
+                    }, 5000 );
+                    powers.pop();
+                    break;
+                }
+
+                if( powers[i].y > height ){
+                    powers = [];
                 }
             }
         }
