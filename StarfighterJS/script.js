@@ -10,7 +10,7 @@ var height = 600;
 var keys = [];
 
 var able = true;
-
+var helth = 3;
 var player = {
 
     x: width/2,
@@ -96,6 +96,9 @@ function update(){
 
     function game(){
         frame++;
+        if( helth == 0 ){
+            landfall = true;
+        }
 
         ctx.fillStyle ="#808080";
         ctx.drawImage( ship, player.x, player.y, player.width, player.height );
@@ -168,7 +171,7 @@ function update(){
             player.super = false;
         }
 
-        if( enemy.length == 0 && difficulty > 2.9 ){
+        if( enemy.length == 0 && player.kills > 30 ){
             won = true;
         }
 
@@ -184,7 +187,9 @@ function update(){
 
         for( var i = 0; i < enemy.length; i++ ){
             if( enemy[i].y >= height ){
-                landfall = true;
+                helth--;
+                enemy.unshift( i );
+                //fix this please
                 console.log( 'ouch' );
             }
         }
@@ -309,7 +314,7 @@ function update(){
         ctx.clearRect(0,0,width,height);
         ctx.fillRect(0,0,width, height);
         ctx.fillStyle = '#FFFF33';
-        ctx.fillText( "win" , width/2, height/2 );
+        ctx.fillText( "why would you save this hellscape" , width/2 - 18, height/2 );
 
     }
 
