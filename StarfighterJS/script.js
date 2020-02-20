@@ -59,6 +59,7 @@ var gamer = false;
 var won = false;
 var landfall = false;
 var cooldown = 0;
+var superdown = 0;
 
 function update(){
 
@@ -163,6 +164,9 @@ function update(){
             }
         }
 
+        if( superdown == 0 ){
+            player.super = false;
+        }
 
         if( enemy.length == 0 && difficulty > 2.9 ){
             won = true;
@@ -195,9 +199,7 @@ function update(){
 
                 if( tag( player, powers[i] ) ){
                     player.super = true;
-                    setTimeout( function(){
-                        player.super = false;
-                    }, 5000 );
+                    superdown = 200;
                     powers.pop();
                     break;
                 }
@@ -271,10 +273,15 @@ function update(){
         }
 
         ctx.fillStyle = '#00FFFF';
-        ctx.fillRect( player.x + 10, player.y - cooldown, 2, cooldown );
+        ctx.fillRect( player.x , player.y - cooldown, 2, cooldown );
+        ctx.fillStyle = '#00FF88';
+        ctx.fillRect( player.x - 2, player.y - superdown /10, 2, superdown / 10 );
 
         if( cooldown > 0 ){
             cooldown--;
+        }
+        if( superdown > 0 ){
+            superdown--;
         }
 
         ctx.fillStyle = "#FFFFFF";
