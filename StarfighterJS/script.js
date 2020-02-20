@@ -202,8 +202,7 @@ function update(){
                         setTimeout( function(){
                         player.super = false;
                     }, 5000 );
-                    powers.pop();
-                    break;
+                    powers[i].y = 0;
                 }
             }
         }
