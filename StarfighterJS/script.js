@@ -188,9 +188,9 @@ function update(){
         for( var i = 0; i < enemy.length; i++ ){
             if( enemy[i].y >= height ){
                 helth--;
-                enemy.unshift( i );
+                enemy.splice( i , 1 );
+                break;
                 //fix this please
-                console.log( 'ouch' );
             }
         }
         if( powers.length == 0 ){
@@ -314,7 +314,7 @@ function update(){
         ctx.clearRect(0,0,width,height);
         ctx.fillRect(0,0,width, height);
         ctx.fillStyle = '#FFFF33';
-        ctx.fillText( "why would you save this hellscape" , width/2 - 18, height/2 );
+        ctx.fillText( "why would you save this hellscape" , width/2 + 18, height/2 );
 
     }
 
