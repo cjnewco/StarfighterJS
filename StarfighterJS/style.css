@@ -1,0 +1,10 @@
+body{
+    backgound : lightblue
+    text-align: center;
+}
+
+#helthbar{
+    width : 800px;
+    height : 20px;
+    background-color: red;
+}
