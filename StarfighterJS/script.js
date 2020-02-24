@@ -62,7 +62,7 @@ var cooldown = 0;
 var superdown = 0;
 
 function update(){
-
+    document.getElementById( 'helth' ).innerHTML = "Health : " + helth
     ctx.clearRect( 0, 0, width, height );
 
     ctx.fillStyle = "#000000";
