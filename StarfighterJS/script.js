@@ -63,6 +63,7 @@ var superdown = 0;
 
 function update(){
     document.getElementById( 'helth' ).innerHTML = "Health : " + helth
+    document.getElementById( 'heth' ).setAttribute( "WIDTH", 300 * helth / 3 )
     ctx.clearRect( 0, 0, width, height );
 
     ctx.fillStyle = "#000000";
@@ -150,7 +151,6 @@ function update(){
             num++;
             enemycnt--;
         }
-        console.log( frame );
         if( frame % 200 == 0 ){
             enemycnt += 5;
             difficulty += 0.1;
@@ -193,9 +193,7 @@ function update(){
                 //fix this please
             }
         }
-        if( powers.length == 0 ){
-            console.log("f word");
-        }
+
         if( powers.length > 0 ){
             for( var i = 0; i < powers.length; i++ ){
                 ctx.drawImage( triple, powers[i].x, powers[i].y, powers[i].width, powers[i].height );
@@ -310,7 +308,6 @@ function update(){
 
         //TODO
         gamer = false;
-        console.log( "win" );
         ctx.clearRect(0,0,width,height);
         ctx.fillRect(0,0,width, height);
         ctx.fillStyle = '#FFFF33';
@@ -326,7 +323,7 @@ function update(){
             landfall = false;
             gamer = true;
 
-
+            helth = 3;
             able = true;
             player = {
                 x: width/2,
