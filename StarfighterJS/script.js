@@ -64,10 +64,11 @@ var superdown = 0;
 
 function update(){
     document.getElementById( 'helth' ).innerHTML = "Health : " + helth
-    healthbar = document.getElementById("heth");
     healthbar.setAttributeNS( null ,"width", 300 * helth / 3 + "" );
     ctx.clearRect( 0, 0, width, height );
-
+    if( helth == 1 ){
+        healthbar.setAttributeNS( null, "style", "fill:rgb(255, 0, 0);");
+    }
     ctx.fillStyle = "#000000";
 
     ctx.beginPath();
