@@ -50,6 +50,9 @@ var pew = new Image();
 pew.src = 'src/sprites/pew pew.gif';
 var trophy = new Image();
 trophy.src = 'src/sprites/ngwin.gif';
+var starfiter = new Image();
+starfiter.src = 'src/title.png';
+
 var healthbar = document.getElementById("heth");
 
 canvas.width = width;
@@ -63,6 +66,9 @@ var cooldown = 0;
 var superdown = 0;
 
 function update(){
+    if( helth < 0 ){
+        helth = 0;
+    }
     document.getElementById( 'helth' ).innerHTML = "Health : " + helth
     healthbar = document.getElementById("heth");
     healthbar.setAttributeNS( null ,"width", 300 * helth / 3 + "" );
@@ -80,14 +86,14 @@ function update(){
     ctx.fill();
 
     function title(){
-        //TODO
+
         var box = {
             x : width/2 - 150,
-            y : height /5 * 3,
+            y : height /5 * 4,
             width : 300,
             height : 90
         }
-
+        ctx.drawImage( starfiter, 100 , 0, 600, 400 );
         ctx.fillStyle = "#45F9C3";
         ctx.fillRect( box.x, box.y, box.width, box.height );
         ctx.fillStyle = '#FFFFFF';
@@ -319,45 +325,18 @@ function update(){
         ctx.fillRect(0,0,width, height);
         ctx.fillStyle = '#FFFF33';
         ctx.fillText( "why would you save this hellscape" , width/2 + 18, height/2 );
+        if( cursor.click ){
+            reStart();
+        }
 
     }
 
     function lose(){
         gamer = false;
         ctx.clearRect(0,0,width, height);
-        ctx.fillText("click to try again loser", width/2, height/2 );
+        ctx.fillText("click to try again loser", width/2 - 12, height/2 );
         if( cursor.click ){
-            landfall = false;
-            gamer = true;
-
-            helth = 3;
-            able = true;
-            player = {
-                x: width/2,
-                y: height/2,
-                width: 48,
-                height: 48,
-                vx: 0,
-                vy: 0,
-                super: false,
-                kills: 0
-            }
-
-            cursor = {
-                x : 0,
-                y : 0,
-                width : 11,
-                height : 16,
-                click : false
-            };
-            frame = 0;
-            enemycnt = 5;
-            temp = enemycnt;
-            airrest = 0.8;
-            enemy = [];
-            bullets = [];
-            powers = [];
-            difficulty = 0;
+            reStart();
         }
     }
 
@@ -377,6 +356,41 @@ function update(){
     requestAnimationFrame(update);
 }
 
+function reStart(){
+    landfall = false;
+    gamer = true;
+
+    helth = 3;
+    able = true;
+    player = {
+        x: width/2,
+        y: height/2,
+        width: 48,
+        height: 48,
+        vx: 0,
+        vy: 0,
+        super: false,
+        kills: 0
+    }
+
+    cursor = {
+        x : 0,
+        y : 0,
+        width : 11,
+        height : 16,
+        click : false
+    };
+    frame = 0;
+    enemycnt = 5;
+    temp = enemycnt;
+    airrest = 0.8;
+    enemy = [];
+    bullets = [];
+    powers = [];
+    difficulty = 0;
+    //working on it
+    healthbar.setAttrbuteNS( null,  "Style", "fill:rgb(69,249,195)" );
+}
 window.addEventListener( "click", function(e){
     cursor.click = true;
     window.setTimeout( function(){
