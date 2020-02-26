@@ -50,7 +50,7 @@ var pew = new Image();
 pew.src = 'src/sprites/pew pew.gif';
 var trophy = new Image();
 trophy.src = 'src/sprites/ngwin.gif';
-var healthbar = document.getElementById( "ouch" );
+var healthbar = document.getElementById("heth");
 
 canvas.width = width;
 canvas.height = height;
@@ -64,8 +64,12 @@ var superdown = 0;
 
 function update(){
     document.getElementById( 'helth' ).innerHTML = "Health : " + helth
+    healthbar = document.getElementById("heth");
     healthbar.setAttributeNS( null ,"width", 300 * helth / 3 + "" );
     ctx.clearRect( 0, 0, width, height );
+    if( helth == 2 ){
+        healthbar.setAttributeNS( null, "style", "fill:rgb(255,255,0)");
+    }
     if( helth == 1 ){
         healthbar.setAttributeNS( null, "style", "fill:rgb(255, 0, 0);");
     }
