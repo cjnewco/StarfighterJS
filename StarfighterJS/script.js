@@ -328,6 +328,7 @@ function update(){
         ctx.clearRect(0,0,width,height);
         ctx.fillRect(0,0,width, height);
         ctx.fillStyle = '#FFFF33';
+        ctx.drawImage( trophy , width / 2, height / 2 - 100, 48 , 48 );
         ctx.fillText( "why would you save this hellscape" , width/2 - 18, height/2 );
         if( cursor.click ){
             reStart();
