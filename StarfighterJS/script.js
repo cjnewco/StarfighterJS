@@ -96,6 +96,7 @@ function update(){
         ctx.drawImage( starfiter, 100 , 0, 600, 400 );
         ctx.fillStyle = "#45F9C3";
         ctx.fillRect( box.x, box.y, box.width, box.height );
+        ctx.drawImage( ship, 523, 373, ship.width, ship.height );
         ctx.fillStyle = '#FFFFFF';
         ctx.font = '20px Comic Sans MS';
         ctx.fillText( 'START', box.x + box.width/2 - 25, box.y + box.height/2 + 10 );
@@ -104,6 +105,9 @@ function update(){
                 gamer = true;
                 op = false;//change cols
             }
+        }
+        if( cursor.click){
+            console.log( cursor.x , cursor.y );
         }
     }
     //poewrup falls, gives super for 5s
