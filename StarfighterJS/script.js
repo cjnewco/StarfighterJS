@@ -324,7 +324,7 @@ function update(){
         ctx.clearRect(0,0,width,height);
         ctx.fillRect(0,0,width, height);
         ctx.fillStyle = '#FFFF33';
-        ctx.fillText( "why would you save this hellscape" , width/2 + 18, height/2 );
+        ctx.fillText( "why would you save this hellscape" , width/2 - 18, height/2 );
         if( cursor.click ){
             reStart();
         }
@@ -358,6 +358,7 @@ function update(){
 
 function reStart(){
     landfall = false;
+    won = false;
     gamer = true;
 
     helth = 3;
@@ -388,8 +389,8 @@ function reStart(){
     bullets = [];
     powers = [];
     difficulty = 0;
-    //working on it
-    healthbar.setAttrbuteNS( null,  "Style", "fill:rgb(69,249,195)" );
+    healthbar = document.getElementById( "heth" );
+    healthbar.setAttributeNS( null, "style", "fill:rgb(69,249,195)");
 }
 window.addEventListener( "click", function(e){
     cursor.click = true;
