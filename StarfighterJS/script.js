@@ -156,8 +156,11 @@ function update(){
             else player.vy = 0;
         }
 
-        if( theBigBad.x <= 0 || theBigBad.x - theBigBad.width <= width  ){
-            theBigBad.vx * -1;
+        if( theBigBad.x <= 0 ){
+            theBigBad.vx = 1;
+        }
+        if( theBigBad.x + theBigBad.width >= width ){
+            theBigBad.vx = -1;
         }
 
         player.x += player.vx;
@@ -285,8 +288,7 @@ function update(){
 
         ctx.fill();
 
-//        if( keys[32] ){ //makes bullets look cool but lag ruby blue
-        if( keys[32] /*&& cooldown == 0*/ ){
+        if( keys[32] && cooldown == 0 ){
             bullets.unshift({
                 x: player.x + player.width/2,
                 y: player.y - player.height / 2,
@@ -407,7 +409,7 @@ function reStart(){
         kills: 0
     }
 
-    var theBigBad = {
+    theBigBad = {
         x : width / 2,
         y : 10,
         width: 48,
