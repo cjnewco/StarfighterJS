@@ -23,6 +23,14 @@ var player = {
     kills: 0
 
 }
+var theBigBad = {
+    x : width / 2,
+    y : 10,
+    width: 48,
+    height: 48,
+    vx : 1,
+    helth : 5
+}
 
 var cursor = {
     x : 0,
@@ -38,6 +46,7 @@ var airrest = 0.8;
 var enemy = [];
 var bullets = [];
 var powers = [];
+var stars = [];
 var difficulty = 0;
 
 var triple = new Image();
@@ -84,7 +93,6 @@ function update(){
     ctx.beginPath();
     ctx.rect( 0, 0, width, height);
     ctx.fill();
-
     function title(){
 
         var box = {
@@ -148,17 +156,24 @@ function update(){
             else player.vy = 0;
         }
 
+        if( theBigBad.x <= 0 || theBigBad.x - theBigBad.width <= width  ){
+            theBigBad.vx * -1;
+        }
+
         player.x += player.vx;
         player.y += player.vy;
+        theBigBad.x += theBigBad.vx;
 
         player.vy *= airrest;
         player.vx *= airrest;
+
+        ctx.fillRect( theBigBad.x, theBigBad.y, theBigBad.width, theBigBad.height );
 
         var num = 0;
         for( var i = 0; i < enemycnt; ){
             enemy.push({
                 x: ( num + 1 ) * width/(temp + 1),
-                y: -48,
+                y: -48 * ( Math.random() * 3 + 1 ),
                 width: 48,
                 height: 48,
                 vx: -2,
@@ -188,27 +203,39 @@ function update(){
             player.super = false;
         }
 
-        if( enemy.length == 0 && player.kills > 30 ){
+        if( theBigBad.helth == 0 ){
             won = true;
+        }
+
+        for( var i = 0; i < bullets.length; i++ ){
+            if( tag( bullets[i], theBigBad ) ){
+                bullets.splice( i );
+                theBigBad.helth--;
+                break;
+            }
         }
 
         ctx.beginPath();
         ctx.fillStyle = "#FF0000";
-        if( enemy.length > 0 ){
-            if( enemy[0].x - 20 <= 0  || enemy[enemy.length - 1].x + 20 >= (width - enemy[0].width/2) ){
-                for( var i = 0; i < enemy.length; i++ ){
-//                    enemy[i].vx *= -1
-                }
-            }//this is fucked because it unshifts but class ends in like small amount of time so i probably wont fix it lol nevm fixed it but not completly
-        }
 
         for( var i = 0; i < enemy.length; i++ ){
             if( enemy[i].y >= height ){
-                helth--;
                 enemy.splice( i , 1 );
                 break;
                 //fix this please
             }
+        }
+
+        for( var i = 0; i < enemy.length; i++ ){
+            if( tag( player, enemy[i] ) ){
+                helth--;
+                enemy.splice(i , 1);
+                break;
+            }
+        }
+
+        if( frame % 200 == 0){
+            //make the enemy bad man shoot the shooty bang bangs;
         }
 
         if( powers.length > 0 ){
@@ -259,7 +286,7 @@ function update(){
         ctx.fill();
 
 //        if( keys[32] ){ //makes bullets look cool but lag ruby blue
-        if( keys[32] && cooldown == 0 ){
+        if( keys[32] /*&& cooldown == 0*/ ){
             bullets.unshift({
                 x: player.x + player.width/2,
                 y: player.y - player.height / 2,
@@ -288,7 +315,7 @@ function update(){
             });
             }
 
-            cooldown = 20;
+            cooldown = 60;
 
         }
 
@@ -352,6 +379,7 @@ function update(){
         game();
     }
     if( won ){
+        ctx.fillStyle = "#000000";
         win();
     }
     if( landfall ){
@@ -377,6 +405,15 @@ function reStart(){
         vy: 0,
         super: false,
         kills: 0
+    }
+
+    var theBigBad = {
+        x : width / 2,
+        y : 10,
+        width: 48,
+        height: 48,
+        vx : 1,
+        helth : 5
     }
 
     cursor = {
