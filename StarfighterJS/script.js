@@ -240,8 +240,18 @@ function update(){
             }
         }
 
-        if( frame % 200 == 0){
-            //make the enemy bad man shoot the shooty bang bangs;
+        if( frame % 200 == 0 && frame != 200 ){
+            var dank = 3;
+            while( dank < 0 ){
+                dank--;
+                obs.push({
+                    x: theBigBad.x + theBigBad.width,
+                    y: theBigBad.y,
+                    width: 16,
+                    height: 16,
+                    vy: 3
+                });
+            }
         }
 
         if( powers.length > 0 ){
