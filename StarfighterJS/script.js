@@ -47,6 +47,7 @@ var enemy = [];
 var bullets = [];
 var powers = [];
 var stars = [];
+var obs = [];
 var difficulty = 0;
 
 var triple = new Image();
@@ -61,6 +62,8 @@ var trophy = new Image();
 trophy.src = 'src/sprites/ngwin.gif';
 var starfiter = new Image();
 starfiter.src = 'src/title.png';
+var bad = new Image();
+bad.src = 'src/sprites/bad man.gif';
 
 var healthbar = document.getElementById("heth");
 
@@ -170,7 +173,7 @@ function update(){
         player.vy *= airrest;
         player.vx *= airrest;
 
-        ctx.fillRect( theBigBad.x, theBigBad.y, theBigBad.width, theBigBad.height );
+        ctx.drawImage( bad, theBigBad.x, theBigBad.y, theBigBad.width, theBigBad.height );
 
         var num = 0;
         for( var i = 0; i < enemycnt; ){
@@ -432,6 +435,7 @@ function reStart(){
     enemy = [];
     bullets = [];
     powers = [];
+    obs = [];
     difficulty = 0;
     healthbar = document.getElementById( "heth" );
     healthbar.setAttributeNS( null, "style", "fill:rgb(69,249,195)");
