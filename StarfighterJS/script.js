@@ -49,6 +49,7 @@ var powers = [];
 var stars = [];
 var obs = [];
 var difficulty = 0;
+var dank = 0;
 
 var triple = new Image();
 triple.src = 'src/sprites/tripleshot.gif';
@@ -239,19 +240,28 @@ function update(){
                 break;
             }
         }
-
-        if( frame % 200 == 0 && frame != 200 ){
-            var dank = 3;
-            while( dank < 0 ){
+        if( frame % 200 == 0 && frame != 0 ){
+            dank = 3;
+            while( dank > 0 ){
                 dank--;
-                obs.push({
-                    x: theBigBad.x + theBigBad.width,
-                    y: theBigBad.y,
-                    width: 16,
-                    height: 16,
-                    vy: 3
-                });
+                window.setTimeout(function(){
+                    obs.push({
+                        x: theBigBad.x + theBigBad.width/2,
+                        y: theBigBad.y - 17 * dank,
+                        width: 16,
+                        height: 16,
+                        vy: 1
+                    });
+                }, 80);
             }
+        }
+
+        ctx.fillStyle = '#FF0000';
+
+        for( var i = 0; i < obs.length; i++ ){
+            ctx.fillRect( obs[i].x, obs[i].y, obs[i].width, obs[i].height );
+
+            obs[i].y += obs[i].vy;
         }
 
         if( powers.length > 0 ){
@@ -335,7 +345,7 @@ function update(){
         }
 
         ctx.fillStyle = '#00FFFF';
-        ctx.fillRect( player.x , player.y - cooldown, 2, cooldown );
+        ctx.fillRect( player.x , player.y - cooldown/3, 2, cooldown/3 );
         ctx.fillStyle = '#00FF88';
         ctx.fillRect( player.x - 2, player.y - superdown /10, 2, superdown / 10 );
 
