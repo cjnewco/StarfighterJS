@@ -50,6 +50,7 @@ var stars = [];
 var obs = [];
 var difficulty = 0;
 var dank = 0;
+var time = 0;
 
 var triple = new Image();
 triple.src = 'src/sprites/tripleshot.gif';
@@ -65,6 +66,8 @@ var starfiter = new Image();
 starfiter.src = 'src/title.png';
 var bad = new Image();
 bad.src = 'src/sprites/bad man.gif';
+var obst = new Image();
+obst.src = 'src/sprites/evil pew.gif';
 
 var healthbar = document.getElementById("heth");
 
@@ -174,7 +177,6 @@ function update(){
         player.vy *= airrest;
         player.vx *= airrest;
 
-        ctx.drawImage( bad, theBigBad.x, theBigBad.y, theBigBad.width, theBigBad.height );
 
         var num = 0;
         for( var i = 0; i < enemycnt; ){
@@ -195,7 +197,7 @@ function update(){
             difficulty += 0.1;
         }
 
-        if( difficulty % 0.3 == 0 ){
+        if( difficulty % 0.3 == 0 && difficulty != 0 ){
             if( powers.length == 0 ){
                 powers.push({
                     x: width/2 + 5,
@@ -232,7 +234,13 @@ function update(){
                 //fix this please
             }
         }
-
+        for( var i = 0; i < obs.length; i++ ){
+            if( tag( player, obs[i]) ){
+                helth--;
+                obs.splice(i , 1);
+                break;
+            }
+        }
         for( var i = 0; i < enemy.length; i++ ){
             if( tag( player, enemy[i] ) ){
                 helth--;
@@ -242,27 +250,32 @@ function update(){
         }
         if( frame % 200 == 0 && frame != 0 ){
             dank = 3;
-            while( dank > 0 ){
-                dank--;
-                window.setTimeout(function(){
-                    obs.push({
-                        x: theBigBad.x + theBigBad.width/2,
-                        y: theBigBad.y - 17 * dank,
-                        width: 16,
-                        height: 16,
-                        vy: 1
-                    });
-                }, 80);
-            }
+            time = 1;
         }
+
+        if( dank > 0 && time == 0  ){
+            obs.push({
+                x: theBigBad.x + theBigBad.width/2,
+                y: theBigBad.y + 20 * dank,
+                width: 16,
+                height: 16,
+                vy: 3
+            });
+            dank--;
+            time = 20;
+        }
+
+        time--;
 
         ctx.fillStyle = '#FF0000';
 
         for( var i = 0; i < obs.length; i++ ){
-            ctx.fillRect( obs[i].x, obs[i].y, obs[i].width, obs[i].height );
+            ctx.drawImage( obst, obs[i].x, obs[i].y, obs[i].width, obs[i].height );
 
             obs[i].y += obs[i].vy;
         }
+
+        ctx.drawImage( bad, theBigBad.x, theBigBad.y, theBigBad.width, theBigBad.height );
 
         if( powers.length > 0 ){
             for( var i = 0; i < powers.length; i++ ){
