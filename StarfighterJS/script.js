@@ -70,6 +70,7 @@ var obst = new Image();
 obst.src = 'src/sprites/evil pew.gif';
 
 var healthbar = document.getElementById("heth");
+var enemyheth = document.getElementById("yowie");
 
 canvas.width = width;
 canvas.height = height;
@@ -88,6 +89,8 @@ function update(){
     document.getElementById( 'helth' ).innerHTML = "Health : " + helth
     healthbar = document.getElementById("heth");
     healthbar.setAttributeNS( null ,"width", 300 * helth / 3 + "" );
+    enemyheth = document.getElementById("yowie");
+    enemyheth.setAttributeNS(null,"width",  500 * theBigBad.helth / 5 + "" );
     ctx.clearRect( 0, 0, width, height );
     if( helth == 2 ){
         healthbar.setAttributeNS( null, "style", "fill:rgb(255,255,0)");
