@@ -86,7 +86,9 @@ function update(){
     if( helth < 0 ){
         helth = 0;
     }
-    document.getElementById( 'helth' ).innerHTML = "Health : " + helth
+    console.log( theBigBad.helth );
+    document.getElementById( 'helth' ).innerHTML = "Ship Health : " + helth;
+    document.getElementById( "badGuy").innerHTML = "Alien Commander : " + theBigBad.helth;
     healthbar = document.getElementById("heth");
     healthbar.setAttributeNS( null ,"width", 300 * helth / 3 + "" );
     enemyheth = document.getElementById("yowie");
