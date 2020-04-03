@@ -68,6 +68,8 @@ var bad = new Image();
 bad.src = 'src/sprites/bad man.gif';
 var obst = new Image();
 obst.src = 'src/sprites/evil pew.gif';
+var pack = new Image();
+pack.src = 'src/sprites/pack.gif';
 
 var healthbar = document.getElementById("heth");
 var enemyheth = document.getElementById("yowie");
@@ -203,14 +205,22 @@ function update(){
         }
 
         if( difficulty % 0.3 == 0 && difficulty != 0 ){
+            var type = 1;
+            if( player.helth > 3 ){
+                type -= Math.random() * 1;
+            }
+
             if( powers.length == 0 ){
                 powers.push({
                     x: width/2 + 5,
                     y: 0,
                     width: 10,
-                    height: 10
+                    height: 10,
+                    type: type
                 })
             }
+
+
         }
 
         if( superdown == 0 ){
@@ -285,14 +295,22 @@ function update(){
 
         if( powers.length > 0 ){
             for( var i = 0; i < powers.length; i++ ){
-                ctx.drawImage( triple, powers[i].x, powers[i].y, powers[i].width, powers[i].height );
+                if( powers[i].type == 1 ){
+                    ctx.drawImage( triple, powers[i].x, powers[i].y, powers[i].width, powers[i].height );
+                }
+                else( ctx.drawImage( pack, powers[i].x, powers[i].y, powers[i].width, powers[i].height ) );
 
                 powers[i].y += 2;
 
                 if( tag( player, powers[i] ) ){
-                    player.super = true;
-                    superdown = 200;
-                    powers.pop();
+                    if( powers[i].type == 1 ){
+                        player.super = true;
+                        superdown = 200;
+                        powers.pop();
+                    }
+                    else{
+                        console.log('wa wa');
+                    }
                     break;
                 }
 
