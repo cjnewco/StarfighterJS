@@ -258,7 +258,8 @@ function update(){
             time = 1;
         }
 
-        if( dank > 0 && time == 0  ){
+
+        if( dank > 0 && time == 0 && theBigBad.helth > 3 ){
             obs.push({
                 x: theBigBad.x + theBigBad.width/2,
                 y: theBigBad.y + 20 * dank,
@@ -338,27 +339,12 @@ function update(){
                 vx: player.vx,
                 vy: 5
             });
-            if( player.super ){
-                bullets.unshift({
-                x: player.x + player.width * 9 / 10,
-                y: player.y - player.height / 2 + 15,
-                width : 32,
-                height : 32,
-                vx: player.vx,
-                vy: 5
-            });
-
-                bullets.unshift({
-                x: player.x + player.width * 1 / 10,
-                y: player.y - player.height / 2 + 15,
-                width : 32,
-                height : 32,
-                vx: player.vx,
-                vy: 5
-            });
-            }
+//          triple shot seemed a bit powerful
 
             cooldown = 60;
+            if(player.super){
+                cooldown = 40;
+            }
 
         }
 
